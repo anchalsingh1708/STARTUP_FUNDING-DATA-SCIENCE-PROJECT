@@ -1,0 +1,1443 @@
++*In[1]:*+
+[source, ipython3]
+----
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns 
+import pandas as pd
+import plotly 
+import plotly.express as px
+
+
+----
+
+READING THE DATA
+
+
++*In[2]:*+
+[source, ipython3]
+----
+startup=pd.read_csv('file:///E:\PILLAI%20COLLEGE\SECOND%20YEAR%20SEM%204\DATA%20SCIENCE\startup_funding.csv')
+
+
+----
+
+
++*In[3]:*+
+[source, ipython3]
+----
+startup
+----
+
+
++*Out[3]:*+
+----
+[cols=",,,,,,,,,,",options="header",]
+|===
+| |Sr No |Date dd/mm/yyyy |Startup Name |Industry Vertical |SubVertical
+|City Location |Investors Name |InvestmentnType |Amount in USD |Remarks
+|0 |1 |09/01/2020 |BYJU’S |E-Tech |E-learning |Bengaluru |Tiger Global
+Management |Private Equity Round |20,00,00,000 |NaN
+
+|1 |2 |13/01/2020 |Shuttl |Transportation |App based shuttle service
+|Gurgaon |Susquehanna Growth Equity |Series C |80,48,394 |NaN
+
+|2 |3 |09/01/2020 |Mamaearth |E-commerce |Retailer of baby and toddler
+products |Bengaluru |Sequoia Capital India |Series B |1,83,58,860 |NaN
+
+|3 |4 |02/01/2020 |https://www.wealthbucket.in/ |FinTech |Online
+Investment |New Delhi |Vinod Khatumal |Pre-series A |30,00,000 |NaN
+
+|4 |5 |02/01/2020 |Fashor |Fashion and Apparel |Embroiled Clothes For
+Women |Mumbai |Sprout Venture Partners |Seed Round |18,00,000 |NaN
+
+|... |... |... |... |... |... |... |... |... |... |...
+
+|3039 |3040 |29/01/2015 |Printvenue |NaN |NaN |NaN |Asia Pacific
+Internet Group |Private Equity |45,00,000 |NaN
+
+|3040 |3041 |29/01/2015 |Graphene |NaN |NaN |NaN |KARSEMVEN Fund
+|Private Equity |8,25,000 |Govt backed VC Fund
+
+|3041 |3042 |30/01/2015 |Mad Street Den |NaN |NaN |NaN |Exfinity Fund,
+GrowX Ventures. |Private Equity |15,00,000 |NaN
+
+|3042 |3043 |30/01/2015 |Simplotel |NaN |NaN |NaN |MakeMyTrip |Private
+Equity |NaN |Strategic Funding, Minority stake
+
+|3043 |3044 |31/01/2015 |couponmachine.in |NaN |NaN |NaN |UK based Group
+of Angel Investors |Seed Funding |1,40,000 |NaN
+|===
+
+3044 rows × 10 columns
+----
+
+NUMBER OF ROWS AND COLUMNS
+
+
++*In[4]:*+
+[source, ipython3]
+----
+startup.shape
+----
+
+
++*Out[4]:*+
+----(3044, 10)----
+
+COLUMNS
+
+
++*In[5]:*+
+[source, ipython3]
+----
+startup.columns
+----
+
+
++*Out[5]:*+
+----Index(['Sr No', 'Date dd/mm/yyyy', 'Startup Name', 'Industry Vertical',
+       'SubVertical', 'City  Location', 'Investors Name', 'InvestmentnType',
+       'Amount in USD', 'Remarks'],
+      dtype='object')----
+
+Concise summary of a DataFrame
+
+
++*In[6]:*+
+[source, ipython3]
+----
+startup.info()
+----
+
+
++*Out[6]:*+
+----
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 3044 entries, 0 to 3043
+Data columns (total 10 columns):
+ #   Column             Non-Null Count  Dtype 
+---  ------             --------------  ----- 
+ 0   Sr No              3044 non-null   int64 
+ 1   Date dd/mm/yyyy    3044 non-null   object
+ 2   Startup Name       3044 non-null   object
+ 3   Industry Vertical  2873 non-null   object
+ 4   SubVertical        2108 non-null   object
+ 5   City  Location     2864 non-null   object
+ 6   Investors Name     3020 non-null   object
+ 7   InvestmentnType    3040 non-null   object
+ 8   Amount in USD      2084 non-null   object
+ 9   Remarks            419 non-null    object
+dtypes: int64(1), object(9)
+memory usage: 237.9+ KB
+----
+
+DIMENSION OF THE DATA
+
+
++*In[7]:*+
+[source, ipython3]
+----
+startup.ndim
+----
+
+
++*Out[7]:*+
+----2----
+
+SIZE
+
+
++*In[8]:*+
+[source, ipython3]
+----
+startup.size
+----
+
+
++*Out[8]:*+
+----30440----
+
+DISPLAYING FIRST 5 ROWS
+
+
++*In[9]:*+
+[source, ipython3]
+----
+startup.head()
+----
+
+
++*Out[9]:*+
+----
+[cols=",,,,,,,,,,",options="header",]
+|===
+| |Sr No |Date dd/mm/yyyy |Startup Name |Industry Vertical |SubVertical
+|City Location |Investors Name |InvestmentnType |Amount in USD |Remarks
+|0 |1 |09/01/2020 |BYJU’S |E-Tech |E-learning |Bengaluru |Tiger Global
+Management |Private Equity Round |20,00,00,000 |NaN
+
+|1 |2 |13/01/2020 |Shuttl |Transportation |App based shuttle service
+|Gurgaon |Susquehanna Growth Equity |Series C |80,48,394 |NaN
+
+|2 |3 |09/01/2020 |Mamaearth |E-commerce |Retailer of baby and toddler
+products |Bengaluru |Sequoia Capital India |Series B |1,83,58,860 |NaN
+
+|3 |4 |02/01/2020 |https://www.wealthbucket.in/ |FinTech |Online
+Investment |New Delhi |Vinod Khatumal |Pre-series A |30,00,000 |NaN
+
+|4 |5 |02/01/2020 |Fashor |Fashion and Apparel |Embroiled Clothes For
+Women |Mumbai |Sprout Venture Partners |Seed Round |18,00,000 |NaN
+|===
+----
+
+DISPLAYING LAST 5 ROWS
+
+
++*In[10]:*+
+[source, ipython3]
+----
+startup.tail()
+----
+
+
++*Out[10]:*+
+----
+[cols=",,,,,,,,,,",options="header",]
+|===
+| |Sr No |Date dd/mm/yyyy |Startup Name |Industry Vertical |SubVertical
+|City Location |Investors Name |InvestmentnType |Amount in USD |Remarks
+|3039 |3040 |29/01/2015 |Printvenue |NaN |NaN |NaN |Asia Pacific
+Internet Group |Private Equity |45,00,000 |NaN
+
+|3040 |3041 |29/01/2015 |Graphene |NaN |NaN |NaN |KARSEMVEN Fund
+|Private Equity |8,25,000 |Govt backed VC Fund
+
+|3041 |3042 |30/01/2015 |Mad Street Den |NaN |NaN |NaN |Exfinity Fund,
+GrowX Ventures. |Private Equity |15,00,000 |NaN
+
+|3042 |3043 |30/01/2015 |Simplotel |NaN |NaN |NaN |MakeMyTrip |Private
+Equity |NaN |Strategic Funding, Minority stake
+
+|3043 |3044 |31/01/2015 |couponmachine.in |NaN |NaN |NaN |UK based Group
+of Angel Investors |Seed Funding |1,40,000 |NaN
+|===
+----
+
+DATA CLEANING
+
+CHECKING NULL VALUES IN AMOUNT COLUMN
+
+
++*In[11]:*+
+[source, ipython3]
+----
+startup['Amount in USD'].isnull()
+----
+
+
++*Out[11]:*+
+----0       False
+1       False
+2       False
+3       False
+4       False
+        ...  
+3039    False
+3040    False
+3041    False
+3042     True
+3043    False
+Name: Amount in USD, Length: 3044, dtype: bool----
+
+
++*In[12]:*+
+[source, ipython3]
+----
+startup['Amount in USD'].isnull().value_counts()
+----
+
+
++*Out[12]:*+
+----False    2084
+True      960
+Name: Amount in USD, dtype: int64----
+
+CHECKING TOTAL NULL VALUES IN EVERY COLUMN
+
+
++*In[13]:*+
+[source, ipython3]
+----
+startup.isnull().sum()
+----
+
+
++*Out[13]:*+
+----Sr No                   0
+Date dd/mm/yyyy         0
+Startup Name            0
+Industry Vertical     171
+SubVertical           936
+City  Location        180
+Investors Name         24
+InvestmentnType         4
+Amount in USD         960
+Remarks              2625
+dtype: int64----
+
+DROPPING COLUMN REMARKS AND SRNO
+
+
++*In[14]:*+
+[source, ipython3]
+----
+startup=startup.drop(["Remarks","Sr No"],axis=1)
+----
+
+
++*In[15]:*+
+[source, ipython3]
+----
+startup=startup.dropna()
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+Converting Amount in USD from string to integer
+
+
++*In[16]:*+
+[source, ipython3]
+----
+startup["Amount in USD"]=startup["Amount in USD"].str.replace(",","")
+startup["Amount in USD"]=startup["Amount in USD"].str.replace("undisclosed","")
+startup["Amount in USD"]=startup["Amount in USD"].str.replace("unknown","")
+startup["Amount in USD"]=startup["Amount in USD"].str.replace("unknown","")
+startup["Amount in USD"]=startup["Amount in USD"].str.replace("Undisclosed","")
+startup["Amount in USD"]=startup["Amount in USD"].str.replace("+","")
+----
+
+
++*Out[16]:*+
+----
+<ipython-input-16-c0d6d244e5c8>:6: FutureWarning: The default value of regex will change from True to False in a future version. In addition, single character regular expressions will*not* be treated as literal strings when regex=True.
+  startup["Amount in USD"]=startup["Amount in USD"].str.replace("+","")
+----
+
+
++*In[17]:*+
+[source, ipython3]
+----
+startup["Amount in USD"]=pd.to_numeric(startup["Amount in USD"])
+----
+
+FILLING NULL VALUE IN COLUMN Amount in USD WITH AVERAGE VALUE OF COLUMN
+
+
++*In[18]:*+
+[source, ipython3]
+----
+startup['Amount in USD'].fillna(startup['Amount in USD'])
+----
+
+
++*Out[18]:*+
+----0       200000000.0
+1         8048394.0
+2        18358860.0
+3         3000000.0
+4         1800000.0
+           ...     
+2098       160000.0
+2100       185000.0
+2101     17000000.0
+2102      5150000.0
+2103      1100000.0
+Name: Amount in USD, Length: 1406, dtype: float64----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[19]:*+
+[source, ipython3]
+----
+startup['Amount in USD'].isnull().value_counts()
+----
+
+
++*Out[19]:*+
+----False    1399
+True        7
+Name: Amount in USD, dtype: int64----
+
+SHAPE OF DATASET AFTER DROPPING COLUMN REMARKS AND SRNO
+
+
++*In[20]:*+
+[source, ipython3]
+----
+startup.shape
+----
+
+
++*Out[20]:*+
+----(1406, 8)----
+
+viewing some basic statistical details like percentile, mean, std etc
+
+
++*In[21]:*+
+[source, ipython3]
+----
+startup.describe()
+----
+
+
++*Out[21]:*+
+----
+[cols=",",options="header",]
+|===
+| |Amount in USD
+|count |1.399000e+03
+|mean |2.047457e+07
+|std |1.419738e+08
+|min |1.800000e+04
+|25% |5.000000e+05
+|50% |2.000000e+06
+|75% |8.024197e+06
+|max |3.900000e+09
+|===
+----
+
+VIEWING AMOUNT IN USD COLUMN IN DECREASING AMOUNT
+
+
++*In[22]:*+
+[source, ipython3]
+----
+startup=startup.sort_values(by=["Amount in USD"],ascending=False).reset_index()
+----
+
+
++*In[23]:*+
+[source, ipython3]
+----
+startup=startup.drop(["index"],axis=1)
+----
+
+
++*In[24]:*+
+[source, ipython3]
+----
+startup.head()
+----
+
+
++*Out[24]:*+
+----
+[cols=",,,,,,,,",options="header",]
+|===
+| |Date dd/mm/yyyy |Startup Name |Industry Vertical |SubVertical |City
+Location |Investors Name |InvestmentnType |Amount in USD
+|0 |27/08/2019 |Rapido Bike Taxi |Transportation |Bike Taxi |Bengaluru
+|Westbridge Capital |Series B |3.900000e+09
+
+|1 |11/08/2017 |Flipkart |eCommerce |Online Marketplace |Bangalore
+|Softbank |Private Equity |2.500000e+09
+
+|2 |21/03/2017 |Flipkart |eCommerce |ECommerce Marketplace |Bangalore
+|Microsoft, eBay, Tencent Holdings |Private Equity |1.400000e+09
+
+|3 |18/05/2017 |Paytm |ECommerce |Mobile Wallet & ECommerce platform
+|Bangalore |SoftBank Group |Private Equity |1.400000e+09
+
+|4 |25/11/2019 |Paytm |FinTech |Mobile Wallet |Noida |Vijay Shekhar
+Sharma |Funding Round |1.000000e+09
+|===
+----
+
+Lets check the funding Range provided by Investors
+
+
++*In[25]:*+
+[source, ipython3]
+----
+plt.figure(figsize=(15,8))
+sns.set(style="darkgrid")
+px.histogram(startup, x="Amount in USD")
+----
+
+
++*Out[25]:*+
+----
+
+
+[[7d58308e-28ea-4439-8e51-81eed59cec5f]]
+<Figure size 1080x576 with 0 Axes>----
+
+The maximum density of fundings provided by invester lies in 0-0.5B and
+``Rapido Bike Tax'' is the only startup who has recieved funding of 3.9B
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+Lets check the startups who has recieved bottom 20 minor fundings
+
+
++*In[26]:*+
+[source, ipython3]
+----
+startup=startup.sort_values(by=["Amount in USD"],ascending=True).reset_index()
+----
+
+
++*In[27]:*+
+[source, ipython3]
+----
+start_botfun=startup[0:20]
+----
+
+
++*In[28]:*+
+[source, ipython3]
+----
+start_botfun[["Startup Name","Amount in USD"]]
+----
+
+
++*Out[28]:*+
+----
+[cols=",,",options="header",]
+|===
+| |Startup Name |Amount in USD
+|0 |Maptags |18000.0
+|1 |Cloudrino |22500.0
+|2 |SoundSurround |22500.0
+|3 |Gamooz |22500.0
+|4 |Strike |22500.0
+|5 |Newspatrolling |25000.0
+|6 |VST Travels |27000.0
+|7 |Woodpie |30000.0
+|8 |Book Servicing |30000.0
+|9 |Perfumery |30000.0
+|10 |goSporto |30000.0
+|11 |Styledotme |37000.0
+|12 |ERA |39000.0
+|13 |Wefly Indoor Skydiving |40000.0
+|14 |Moodoo |40000.0
+|15 |Blood n Care |40000.0
+|16 |Vebbler |40000.0
+|17 |imedilane |40000.0
+|18 |Leopetra |40000.0
+|19 |Edurev |40000.0
+|===
+----
+
+
++*In[29]:*+
+[source, ipython3]
+----
+plt.figure(figsize=(15,8))
+sns.set(style="darkgrid")
+sns.barplot(data=start_botfun,y="Startup Name",x="Amount in USD",palette="ch:s=.25,rot=-.25")
+----
+
+
++*Out[29]:*+
+----<AxesSubplot:xlabel='Amount in USD', ylabel='Startup Name'>
+![png](output_51_1.png)
+----
+
+Startups like Maptags, Cloudrino, SoundSurround have received Lowest
+fundings
+
+Lets check the startups who has recieved top 20 major fundings
+
+
++*In[30]:*+
+[source, ipython3]
+----
+startup=startup.sort_values(by=["Amount in USD"],ascending=False).reset_index()
+----
+
+
++*In[31]:*+
+[source, ipython3]
+----
+startup.head()
+----
+
+
++*Out[31]:*+
+----
+[cols=",,,,,,,,,,",options="header",]
+|===
+| |level_0 |index |Date dd/mm/yyyy |Startup Name |Industry Vertical
+|SubVertical |City Location |Investors Name |InvestmentnType |Amount in
+USD
+|0 |1398 |0 |27/08/2019 |Rapido Bike Taxi |Transportation |Bike Taxi
+|Bengaluru |Westbridge Capital |Series B |3.900000e+09
+
+|1 |1397 |1 |11/08/2017 |Flipkart |eCommerce |Online Marketplace
+|Bangalore |Softbank |Private Equity |2.500000e+09
+
+|2 |1396 |2 |21/03/2017 |Flipkart |eCommerce |ECommerce Marketplace
+|Bangalore |Microsoft, eBay, Tencent Holdings |Private Equity
+|1.400000e+09
+
+|3 |1395 |3 |18/05/2017 |Paytm |ECommerce |Mobile Wallet & ECommerce
+platform |Bangalore |SoftBank Group |Private Equity |1.400000e+09
+
+|4 |1394 |4 |25/11/2019 |Paytm |FinTech |Mobile Wallet |Noida |Vijay
+Shekhar Sharma |Funding Round |1.000000e+09
+|===
+----
+
+
++*In[32]:*+
+[source, ipython3]
+----
+start_topfun=startup[0:20]
+----
+
+
++*In[33]:*+
+[source, ipython3]
+----
+plt.figure(figsize=(15,8))
+sns.set(style="darkgrid")
+sns.barplot(data=start_topfun,y="Startup Name",x="Amount in USD",palette="ch:s=.25,rot=-.25")
+----
+
+
++*Out[33]:*+
+----<AxesSubplot:xlabel='Amount in USD', ylabel='Startup Name'>
+![png](output_57_1.png)
+----
+
+Startups like Rapido bike taxi, Flipkart, Udaan and Paytm have received
+major fundings
+
+Lets check what type of Investment are the investor really intrested in
+
+
++*In[34]:*+
+[source, ipython3]
+----
+startup["InvestmentnType"]=startup["InvestmentnType"].str.replace("Seed/ Angel Funding","Seed / Angel Funding")
+startup["InvestmentnType"]=startup["InvestmentnType"].str.replace("Seed/Angel Funding","Seed / Angel Funding")
+startup["InvestmentnType"]=startup["InvestmentnType"].str.replace("Angel / Seed Funding","Seed / Angel Funding")
+startup["InvestmentnType"]=startup["InvestmentnType"].str.replace("Seed / Angle Funding","Seed / Angel Funding")
+startup["InvestmentnType"]=startup["InvestmentnType"].str.replace("pre-Series A","Pre-Series A")
+startup["InvestmentnType"]=startup["InvestmentnType"].str.replace("Pre-series A","Pre-Series A")
+----
+
+
++*In[35]:*+
+[source, ipython3]
+----
+start_INtype=startup["InvestmentnType"].value_counts()[0:20].reset_index()
+----
+
+
++*In[36]:*+
+[source, ipython3]
+----
+start_INtype
+----
+
+
++*Out[36]:*+
+----
+[cols=",,",options="header",]
+|===
+| |index |InvestmentnType
+|0 |Private Equity |718
+|1 |Seed Funding |439
+|2 |Seed / Angel Funding |100
+|3 |Series A |24
+|4 |Debt Funding |22
+|5 |Series B |20
+|6 |Series C |14
+|7 |Series D |12
+|8 |Seed Round |7
+|9 |Pre-Series A |7
+|10 |Private Equity Round |4
+|11 |Seed |4
+|12 |Series E |2
+|13 |Corporate Round |2
+|14 |Venture Round |2
+|15 |Equity |2
+|16 |Series F |2
+|17 |Venture - Series Unknown |1
+|18 |Mezzanine |1
+|19 |Series J |1
+|===
+----
+
+
++*In[37]:*+
+[source, ipython3]
+----
+plt.figure(figsize=(15,12))
+sns.set(style="darkgrid")
+sns.barplot(data=start_INtype,y="index",x="InvestmentnType",palette="ch:s=.25,rot=-.25")
+plt.title("Investment Type in which Investor are really intrested")
+plt.xlabel("count")
+plt.ylabel("Investment Type")
+plt.show()
+plt.figure(figsize=(15,12))
+plt.pie(start_INtype["InvestmentnType"][0:7],labels=start_INtype["index"][0:7],autopct="%0.1f%%")
+plt.show()
+----
+
+
++*Out[37]:*+
+----
+![png](output_63_0.png)
+
+![png](output_63_1.png)
+----
+
+Maximum investor are intrested in Private equity, Seed funding and Seed
+/ Angel Funding as their Investment Type
+
+Lets check the Industry Vertical in which investor are intrested
+
+
++*In[38]:*+
+[source, ipython3]
+----
+start_indver=startup["Industry Vertical"].value_counts().reset_index()[0:10]
+----
+
+
++*In[39]:*+
+[source, ipython3]
+----
+start_indver
+----
+
+
++*Out[39]:*+
+----
+[cols=",,",options="header",]
+|===
+| |index |Industry Vertical
+|0 |Consumer Internet |582
+|1 |Technology |309
+|2 |eCommerce |125
+|3 |Finance |53
+|4 |Healthcare |43
+|5 |ECommerce |37
+|6 |E-Commerce |24
+|7 |Logistics |23
+|8 |Education |18
+|9 |Food & Beverage |15
+|===
+----
+
+
++*In[40]:*+
+[source, ipython3]
+----
+plt.figure(figsize=(15,12))
+sns.set(style="darkgrid")
+sns.barplot(data=start_indver,y="index",x="Industry Vertical",palette="ch:s=.25,rot=-.25")
+plt.title("Investment wrt Industry Vertical")
+plt.xlabel(" Times Investment done")
+plt.ylabel("Industry Vertical")
+----
+
+
++*Out[40]:*+
+----Text(0, 0.5, 'Industry Vertical')
+![png](output_68_1.png)
+----
+
+Investor have been funding Consumer Internet and Technology
+
+
++*In[41]:*+
+[source, ipython3]
+----
+startup['Investors Name'][startup['Investors Name'] == 'Undisclosed investors'] = 'Undisclosed Investors'
+startup['Investors Name'][startup['Investors Name'] == 'undisclosed Investors'] = 'Undisclosed Investors'
+startup['Investors Name'][startup['Investors Name'] == 'undisclosed investors'] = 'Undisclosed Investors'
+startup['Investors Name'][startup['Investors Name'] == 'Undisclosed investor'] = 'Undisclosed Investors'
+startup['Investors Name'][startup['Investors Name'] == 'Undisclosed Investor'] = 'Undisclosed Investors'
+startup['Investors Name'][startup['Investors Name'] == 'Undisclosed'] = 'Undisclosed Investors'
+----
+
+
++*Out[41]:*+
+----
+<ipython-input-41-d577aae03235>:1: SettingWithCopyWarning:
+
+
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+
+<ipython-input-41-d577aae03235>:2: SettingWithCopyWarning:
+
+
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+
+<ipython-input-41-d577aae03235>:3: SettingWithCopyWarning:
+
+
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+
+<ipython-input-41-d577aae03235>:4: SettingWithCopyWarning:
+
+
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+
+<ipython-input-41-d577aae03235>:5: SettingWithCopyWarning:
+
+
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+
+<ipython-input-41-d577aae03235>:6: SettingWithCopyWarning:
+
+
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+
+----
+
+
++*In[42]:*+
+[source, ipython3]
+----
+startup.head()
+----
+
+
++*Out[42]:*+
+----
+[cols=",,,,,,,,,,",options="header",]
+|===
+| |level_0 |index |Date dd/mm/yyyy |Startup Name |Industry Vertical
+|SubVertical |City Location |Investors Name |InvestmentnType |Amount in
+USD
+|0 |1398 |0 |27/08/2019 |Rapido Bike Taxi |Transportation |Bike Taxi
+|Bengaluru |Westbridge Capital |Series B |3.900000e+09
+
+|1 |1397 |1 |11/08/2017 |Flipkart |eCommerce |Online Marketplace
+|Bangalore |Softbank |Private Equity |2.500000e+09
+
+|2 |1396 |2 |21/03/2017 |Flipkart |eCommerce |ECommerce Marketplace
+|Bangalore |Microsoft, eBay, Tencent Holdings |Private Equity
+|1.400000e+09
+
+|3 |1395 |3 |18/05/2017 |Paytm |ECommerce |Mobile Wallet & ECommerce
+platform |Bangalore |SoftBank Group |Private Equity |1.400000e+09
+
+|4 |1394 |4 |25/11/2019 |Paytm |FinTech |Mobile Wallet |Noida |Vijay
+Shekhar Sharma |Funding Round |1.000000e+09
+|===
+----
+
+
++*In[43]:*+
+[source, ipython3]
+----
+start_un=startup[startup["Investors Name"]!="Undisclosed Investors"]
+----
+
+
++*In[44]:*+
+[source, ipython3]
+----
+start_inves=start_un["Investors Name"].value_counts()[0:10].reset_index()
+----
+
+Now lets check who are the top 20 investors excluding the Undisclosed
+Investor
+
+
++*In[45]:*+
+[source, ipython3]
+----
+start_inves
+
+----
+
+
++*Out[45]:*+
+----
+[cols=",,",options="header",]
+|===
+| |index |Investors Name
+|0 |Kalaari Capital |9
+|1 |Brand Capital |8
+|2 |Trifecta Capital |8
+|3 |Info Edge (India) Ltd |8
+|4 |Venture Catalysts |7
+|5 |Indian Angel Network |7
+|6 |Accel Partners |7
+|7 |The Chennai Angels |5
+|8 |Tiger Global Management |5
+|9 |IFMR Capital |4
+|===
+----
+
+
++*In[46]:*+
+[source, ipython3]
+----
+plt.figure(figsize=(15,12))
+sns.set(style="darkgrid")
+sns.barplot(data=start_inves,y="index",x="Investors Name",palette="ch:s=.25,rot=-.25")
+plt.title(" Top 20 Investors")
+plt.xlabel("count")
+plt.ylabel("Investors Name")
+----
+
+
++*Out[46]:*+
+----Text(0, 0.5, 'Investors Name')
+![png](output_76_1.png)
+----
+
+Now lets check who are the top 20 investors including the Undisclosed
+Investor
+
+
++*In[47]:*+
+[source, ipython3]
+----
+start_invun=startup["Investors Name"].value_counts()[0:10].reset_index()
+----
+
+
++*In[48]:*+
+[source, ipython3]
+----
+start_invun
+----
+
+
++*Out[48]:*+
+----
+[cols=",,",options="header",]
+|===
+| |index |Investors Name
+|0 |Undisclosed Investors |72
+|1 |Kalaari Capital |9
+|2 |Info Edge (India) Ltd |8
+|3 |Trifecta Capital |8
+|4 |Brand Capital |8
+|5 |Venture Catalysts |7
+|6 |Indian Angel Network |7
+|7 |Accel Partners |7
+|8 |The Chennai Angels |5
+|9 |Tiger Global Management |5
+|===
+----
+
+
++*In[49]:*+
+[source, ipython3]
+----
+plt.figure(figsize=(15,12))
+sns.set(style="darkgrid")
+sns.barplot(data=start_invun,y="index",x="Investors Name",palette="ch:s=.25,rot=-.25")
+plt.title(" Top 20 Investors(including the Undisclosed Investor)")
+plt.xlabel("count")
+plt.ylabel("Investors Name")
+----
+
+
++*Out[49]:*+
+----Text(0, 0.5, 'Investors Name')
+![png](output_80_1.png)
+----
+
+#In which city are the highest number of startups located
+
+removes null values from entire dataset (column city ,location)
+
+
++*In[50]:*+
+[source, ipython3]
+----
+data_cities=startup.dropna(how="any",axis=0,subset=['City  Location'])
+data_cities.shape
+----
+
+
++*Out[50]:*+
+----(1406, 10)----
+
+
++*In[51]:*+
+[source, ipython3]
+----
+data_cities_sum=pd.DataFrame(data_cities.groupby(['City  Location']).sum()["Amount in USD"])
+data_cities_sum['% Investements']=((data_cities_sum['Amount in USD']/data_cities_sum['Amount in USD'].sum())*100).round(2)
+data_cities_sum=data_cities_sum.reset_index().sort_values(by='% Investements',ascending=False)
+----
+
+
++*In[52]:*+
+[source, ipython3]
+----
+Top_10 = data_cities_sum[['City  Location','% Investements']][0:10]
+Top_10.loc[len(Top_10.index)] = ['Others', 100-(data_cities_sum['% Investements'][0:10]).sum()] 
+Top_10=Top_10.sort_values(by='% Investements',ascending=False)
+----
+
+
++*In[53]:*+
+[source, ipython3]
+----
+plt.figure(figsize=(6,6))
+plt.title("Distribution of Investments by City")
+colors1 = ['#191970','#001CF0','#0038E2','#0055D4','#0071C6','#008DB8','#00AAAA','#00C69C','#00E28E','#00FF80','#4EF4D1']
+colors=['#234753','#215861','#206A6B','#247D73','#318F77','#46A178','#60B276','#7EC372','#A0D36E','#C6E16A','#EFEE69']
+plt.axis("equal")
+g3=plt.pie(Top_10['% Investements'],labels=Top_10['City  Location'],colors=colors,autopct='%0.0f%%',
+           shadow=True,explode=[0, 0, 0, 0, 0.1, 0.2,0.3,0.3,0.4,0.5,0.6])
+
+plt.show()
+----
+
+
++*Out[53]:*+
+----
+![png](output_86_0.png)
+----
+
+#How is the funding ecosystem evolving with time ?
+
+#Converting date to datetime and extracting month and year values
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[54]:*+
+[source, ipython3]
+----
+startup["Date dd/mm/yyyy"]=startup["Date dd/mm/yyyy"].str.replace("05/072018","05/07/2018")
+startup["Date dd/mm/yyyy"]=startup["Date dd/mm/yyyy"].str.replace("01/07/015","01/07/2015")
+startup["Date dd/mm/yyyy"]=startup["Date dd/mm/yyyy"].str.replace("010/7/2015","01/07/2015")
+startup["Date dd/mm/yyyy"]=startup["Date dd/mm/yyyy"].str.replace("12/05.2015","12/05/2015")
+startup["Date dd/mm/yyyy"]=startup["Date dd/mm/yyyy"].str.replace("13/04.2015","13/04/2015")
+startup["Date dd/mm/yyyy"]=startup["Date dd/mm/yyyy"].str.replace("15/01.2015","15/01/2015")
+startup["Date dd/mm/yyyy"]=startup["Date dd/mm/yyyy"].str.replace("22/01//2015","22/01/2015")
+----
+
+
++*Out[54]:*+
+----
+<ipython-input-54-d0b3acffed3c>:4: FutureWarning:
+
+The default value of regex will change from True to False in a future version.
+
+<ipython-input-54-d0b3acffed3c>:5: FutureWarning:
+
+The default value of regex will change from True to False in a future version.
+
+<ipython-input-54-d0b3acffed3c>:6: FutureWarning:
+
+The default value of regex will change from True to False in a future version.
+
+----
+
+
++*In[55]:*+
+[source, ipython3]
+----
+startup['Date dd/mm/yyyy']=pd.to_datetime(startup['Date dd/mm/yyyy'])
+----
+
+
++*In[56]:*+
+[source, ipython3]
+----
+startup['Year']=startup['Date dd/mm/yyyy'].dt.year
+startup['Month']=startup['Date dd/mm/yyyy'].dt.month
+----
+
+
++*In[57]:*+
+[source, ipython3]
+----
+startup['YearMonth']=startup['Year']*100+startup['Month']
+----
+
+
++*In[58]:*+
+[source, ipython3]
+----
+data_time=startup[['Date dd/mm/yyyy','YearMonth','City  Location','Amount in USD']]
+data_time=data_time.dropna(how="any",axis=0,subset=['City  Location'])
+----
+
+
++*In[59]:*+
+[source, ipython3]
+----
+data_time=pd.DataFrame(data_time[['YearMonth','City  Location']].value_counts()).reset_index().sort_values(by=['City  Location','YearMonth'],ascending=True)
+----
+
+
++*In[60]:*+
+[source, ipython3]
+----
+data_time=data_time[data_time['City  Location'].isin(['Bengaluru','Mumbai','New Delhi','Gurgaon','Noida'])]
+----
+
+
++*In[61]:*+
+[source, ipython3]
+----
+data_time.columns=['YearMonth','City  Location','Count']
+----
+
+catplot: relationship between numerical variable and one or more
+categorical variables
+
+
++*In[62]:*+
+[source, ipython3]
+----
+color3=['#50F9F1','#6AE5A8','#96C96A','#B7AA47','#C78845']
+sns.set_palette(sns.color_palette(color3))
+g5=sns.catplot(data=data_time,x='YearMonth',y='Count',hue='City  Location',kind="point",height=5, aspect=3.0)
+g5.set(title='Evolution of funding investments in Top cities')
+plt.xticks(rotation=90)
+plt.show()
+----
+
+
++*Out[62]:*+
+----
+![png](output_99_0.png)
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+Number of funding per month in decreasing order
+
+
++*In[63]:*+
+[source, ipython3]
+----
+startup["yearmonth"] = (pd.to_datetime(startup['Date dd/mm/yyyy'],
+         format='%d/%m/%Y').dt.year*100)+(pd.to_datetime(startup['Date dd/mm/yyyy'],format='%d/%m/%Y').dt.month)
+
+
+temp = startup['yearmonth'].value_counts().sort_values(ascending = False).head(10)
+print("Number of funding per month in decreasing order(Top 10)\n",temp)
+year_month = startup['yearmonth'].value_counts()
+
+# lets plot the data
+plt.rcParams['figure.figsize'] = (15, 7)
+sns.barplot(year_month.index, year_month.values, palette = 'copper')
+plt.xticks(rotation = 90)
+plt.xlabel('Year-Month of transaction', fontsize=12)
+plt.ylabel('Number of fundings made', fontsize=12)
+plt.title("Year-Month Distribution", fontsize=16)
+plt.show()
+----
+
+
++*Out[63]:*+
+----
+Number of funding per month in decreasing order(Top 10)
+ 201606    59
+201604    57
+201608    56
+201601    50
+201706    50
+201610    49
+201607    48
+201603    47
+201611    47
+201612    47
+Name: yearmonth, dtype: int64
+
+C:\ProgramData\Anaconda3\lib\site-packages\seaborn\_decorators.py:36: FutureWarning:
+
+Pass the following variables as keyword args: x, y. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+
+
+![png](output_102_2.png)
+----
+
+average funding
+
+
++*In[64]:*+
+[source, ipython3]
+----
+print("On Average indian startups got funding of : ", startup["Amount in USD"].dropna().sort_values().mean())
+----
+
+
++*Out[64]:*+
+----
+On Average indian startups got funding of :  20474571.147248033
+----
+
+== lets check the Maximum funding of a startup
+
+
++*In[65]:*+
+[source, ipython3]
+----
+
+print("Maximum funding to a Startups is : ", startup["Amount in USD"].dropna().sort_values().max())
+----
+
+
++*Out[65]:*+
+----
+Maximum funding to a Startups is :  3900000000.0
+----
+
+== lets check the no. of funding each startsup got
+
+
++*In[66]:*+
+[source, ipython3]
+----
+
+
+print("Total startups funded : ", len(startup["Startup Name"].unique()))
+print(startup["Startup Name"].value_counts().head(10))
+StartupName = startup['Startup Name'].value_counts().head(20)
+
+# lets plot the data
+plt.rcParams['figure.figsize'] = (8, 6)
+sns.barplot(x = StartupName.index, y = StartupName.values, alpha=0.9, palette = 'Dark2')
+plt.xticks(rotation='vertical')
+plt.ylabel('Number of fundings made', fontsize=12)
+plt.xlabel('Startup Name', fontsize=12)
+plt.title("Number of fundings Startups Have", fontsize=16)
+plt.show()
+----
+
+
++*Out[66]:*+
+----
+Total startups funded :  1202
+Swiggy           5
+Ola Cabs         5
+Paytm            4
+Uniphore         4
+Medinfi          4
+Udaan            4
+Magicpin         4
+Capital Float    4
+Meesho           4
+Toppr            4
+Name: Startup Name, dtype: int64
+
+![png](output_108_1.png)
+----
+
+number of occurrences of Industry Vertical based on a Investmentntype of
+category.
+
+
++*In[67]:*+
+[source, ipython3]
+----
+ax = sns.countplot(x="Industry Vertical", hue="InvestmentnType",data=startup.value_counts().head(11).reset_index())
+----
+
+
++*Out[67]:*+
+----
+![png](output_110_0.png)
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[68]:*+
+[source, ipython3]
+----
+pivot = startup.value_counts().head(11).reset_index().pivot_table(
+    index=["Industry Vertical"],
+    columns=["InvestmentnType"],
+    values="Amount in USD",
+    aggfunc=np.average)
+p=sns.heatmap(pivot)
+p.set_title("Understanding Investment Type  per Industry Vertical and Amount in USD",fontsize=25)
+
+plt.tick_params(axis='both',labelsize=15,pad=10)
+plt.xlabel('InvestmentnType',fontsize=18)
+plt.ylabel('Industry Vertical',fontsize=18)
+
+
+----
+
+
++*Out[68]:*+
+----Text(48.453125, 0.5, 'Industry Vertical')
+![png](output_112_1.png)
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
